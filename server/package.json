@@ -1,0 +1,29 @@
+{
+  "name": "surveillancecamera",
+  "version": "0.1.0",
+  "private": false,
+  "author": "Johan Söderlund",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "base64-img": "^1.0.4",
+    "create-react-app": "^2.1.4",
+    "fluent-ffmpeg": "^2.1.2",
+    "fs": "0.0.1-security",
+    "https": "^1.0.0",
+    "koa": "^2.6.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-helmet": "^4.0.0",
+    "koa-router": "^7.4.0",
+    "nodemon": "^1.18.10",
+    "pi-camera-connect": "^0.2.0",
+    "pi-pir-sensor": "0.0.3"
+  },
+  "scripts": {
+    "start": "nodemon wot/surveillanceController.js",
+    "build": ""
+  },
+  "devDependencies": {
+    "koa-logger": "^2.0.1"
+  }
+}
