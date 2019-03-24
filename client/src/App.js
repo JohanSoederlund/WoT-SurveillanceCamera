@@ -6,12 +6,12 @@ import socket from './Websocket.js';
 import WotClient from './WotClient';
 
 const body = {password: "qwe123"}
-const getLoginData = async (url, method) => {
+const getData = async (url, method, headers) => {
   try {
     const response = await fetch(url, {
       method: method,
       body:    JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
+      headers: headers,
     })
     const json = await response.json();
     return json;
@@ -30,6 +30,16 @@ const getEntryPointData = async (url) => {
   }
 };
 
+const getProperties = async (url, headers) => {
+  try {
+    const response = await fetch(url, { headers: headers }) 
+    const json = await response.json();
+    return json;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 class App extends Component {
 
   constructor(props) {
@@ -39,8 +49,9 @@ class App extends Component {
 
   async componentDidMount() {
     let entryResponse = await getEntryPointData("https://83.250.202.129/");
-    let data = await getLoginData(entryResponse.links.login, "post");
+    let data = await getData(entryResponse.links.login, "post", { 'Content-Type': 'application/json' });
     socket.emit("camera", data.accessToken);
+    
     socket.on('camera', (data) => {
       let images = this.state.images;
       data.forEach( (image) => {
@@ -51,7 +62,12 @@ class App extends Component {
       }.bind(this) );
     })
 
-    this.setState(this.state);
+    let imgs = this.state.images;
+    let imgResponse = await getProperties(entryResponse.links.properties, { 'Content-Type': 'application/json', 'Authorization': data.accessToken });
+    console.log(imgResponse);
+    imgs.push({original: imgResponse.properties[0].values.pic, thumbnail: imgResponse.properties[0].values.pic, originalTitle: imgResponse.properties[0].values.timestamp, description: imgResponse.properties[0].values.timestamp});
+    //this.setState(this.state);
+    this.setState({images: imgs});
   }
 
   render() {
