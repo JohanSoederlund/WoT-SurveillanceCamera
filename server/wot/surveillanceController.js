@@ -1,7 +1,6 @@
 "use strict";
 
 const axios = require("axios");
-var ffmpeg = require("fluent-ffmpeg");
 const fs = require('fs');
 const base64Img = require('base64-img');
 const https = require('https');
@@ -11,11 +10,10 @@ const motion = require("./motion");
 
 let Router = require("/home/pi/SurveillanceCamera/api/app/routes");
 
-let inFilename = "/home/pi/SurveillanceCamera/video-stream.h264";
-let outFilename = "/home/pi/SurveillanceCamera/video.mp4";
-
+/**
+ * PIR sensor triggered, then camera takes picture, then send to clients and updates properties.
+ */
 motion.sensor.on('movement', function () {
-    console.log("Movement");
     camera.stillCamera.takeImage().then( image => {
         var date = new Date(Date.now());
         var fileName = "/home/pi/SurveillanceCamera/images/"+date.toISOString()+".jpg";
@@ -28,23 +26,16 @@ motion.sensor.on('movement', function () {
     });
 });
 
-function base64_encode(image) {
-    return new Promise( (resolve, reject) => {
-        let bitmap = fs.readFileSync(image);
-        let img = new Buffer(bitmap).toString('base64');
-        resolve (img);
-    }).catch( (err) => {
-        reject(err);
-    })
-    
-}
-
+/**
+ * For future cloud integration pattern
+ * @param {*} image 
+ */
 function postToApi(image) {
     return new Promise( (resolve, reject) => {
         axios({
             httpsAgent: new https.Agent({rejectUnauthorized: false}),
             method: "post",
-            url: "https://13.53.201.101/surveillance/api",
+            url: "https://www.projectsbyjohan.com/surveillance/api",
             data: {
                 image: image
             }
@@ -55,24 +46,4 @@ function postToApi(image) {
         })
     })
 }
-
-/*
-var obj = "";
-camera.videoStream.on("data", data => obj = obj+JSON.stringify(data));
-//camera.videoStream.on("data", data => console.log(JSON.stringify(data)));
-camera.videoStream.on("end", data => console.log("Video stream has ended"));
-camera.streamCamera.startCapture().then(() => {
- 
-    setTimeout( () => {
-        camera.streamCamera.stopCapture()
-        console.log(obj);
-        ffmpeg(inFilename)
-            .outputOptions("-c:v", "copy") // this will copy the data instead or reencode it
-            .save(outFilename);
-    }, 5000)
-    
-});
-*/
-
-
 

@@ -21,7 +21,6 @@ app.use(helmet());
 const options = {
 };
 
-
 // Custom 401 handling
 app.use(function(ctx, next){
     return next().catch((err) => {
@@ -36,10 +35,13 @@ app.use(function(ctx, next){
 
 app.use(kJwt({ secret: SECRET }).unless({ path: [/^\//, /^\/login/] }));
 
+/**
+ * Headers and CORS policy
+ */
 app.use(async (ctx, next) => {
     ctx.set('Access-Control-Allow-Methods', 'GET, POST, HEAD');
     ctx.set({accept: 'application/json'});
-    ctx.set({'Access-Control-Allow-Origin': 'http://localhost:3030'});
+    ctx.set({'Access-Control-Allow-Origin': 'https://www.projectsbyjohan.com'});
     ctx.set({'Access-Control-Allow-Headers': 'content-type'});
     await next();
 })

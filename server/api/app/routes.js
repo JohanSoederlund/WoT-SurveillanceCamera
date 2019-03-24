@@ -15,23 +15,17 @@ const URL = process.env.URL;
 const PASSWORD = process.env.PASSWORD;
 const router = new Router();
 
-//var clients = {};
 let clients = [];
-let cli;
+/**
+ * pub/sub /properties/camera
+ */
 websocket.io.on('connection', (client) => {
-  console.log("CONNECTION");
   client.on('camera', token => { 
-    console.log(token);
     var decoded = jwt.verify(token, SECRET);
-    console.log(decoded);
     if (decoded.admin) {
-        console.log("CAMERA");
         cli = client;
         clients.push(client);
     }
-    
-    
-    //cli.emit("camera", ["asdssadasd"]);
 });
 
   client.on('disconnect', () => {
@@ -45,12 +39,10 @@ websocket.io.on('connection', (client) => {
 });
 
 /**
- * wot camera took new picture
+ * wot camera took new picture.
+ * Sends to connected clients with updated properties
  */
 function sendToWebsocketClients(data) {
-    //websocket.io.sockets.clients().sockets.forEach(client => {
-        //console.log(data);
-    //properties[0].values.pic = data[0].image;
     properties[0].values.timestamp = data[0].filename;
     properties[1].values.timestamp = data[0].filename;
     clients.forEach( client => {
@@ -61,6 +53,7 @@ function sendToWebsocketClients(data) {
 
 /**
  * Every route below.
+ * WoT model
  */
 router.get("/", async function (ctx) {
     ctx.response.status = 200;
@@ -99,15 +92,12 @@ router.get("/things", async function (ctx) {
     ctx.set('Link', URL+"/things");
     ctx.body = {
         links: {_self: URL+"/things", login: URL+"/login", actions: URL+"/actions", model: URL+"/", properties: URL+"/properties"},
-        model: model
+        things: things
       };
 });
 
-
-
 router.post("/login", async function (ctx) {
     ctx.set('Link', URL+"/login");
-    console.log(ctx.request.body);
     if(ctx.request.body.password === PASSWORD) {
         ctx.response.status = 200;
         let token = jwt.sign({ admin: true }, SECRET, {expiresIn: '62d'})
@@ -120,7 +110,6 @@ router.post("/login", async function (ctx) {
     }
     
 });
-
 
 //export default router;
 module.exports = {

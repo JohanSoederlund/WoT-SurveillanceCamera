@@ -42,6 +42,45 @@
 			"response": []
 		},
 		{
+			"name": "/things",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\": \"qwe123\"\n}"
+				},
+				"url": {
+					"raw": "https://83.250.202.129/things",
+					"protocol": "https",
+					"host": [
+						"83",
+						"250",
+						"202",
+						"129"
+					],
+					"path": [
+						"things"
+					]
+				},
+				"description": "GET /homes"
+			},
+			"response": []
+		},
+		{
 			"name": "/properties",
 			"request": {
 				"auth": {
@@ -78,6 +117,92 @@
 					],
 					"path": [
 						"properties"
+					]
+				},
+				"description": "GET /homes"
+			},
+			"response": []
+		},
+		{
+			"name": "/actions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiaWF0IjoxNTUzMzQwMjIxLCJleHAiOjE1NTg2OTcwMjF9.uy-caqUXcmYJEOh96psPdOh2cQ3QYp7C7TN5mXPqYJwa",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://83.250.202.129/actions",
+					"protocol": "https",
+					"host": [
+						"83",
+						"250",
+						"202",
+						"129"
+					],
+					"path": [
+						"actions"
+					]
+				},
+				"description": "GET /homes"
+			},
+			"response": []
+		},
+		{
+			"name": "/actions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiaWF0IjoxNTUzMzQwMjIxLCJleHAiOjE1NTg2OTcwMjF9.uy-caqUXcmYJEOh96psPdOh2cQ3QYp7C7TN5mXPqYJwa",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://83.250.202.129/actions",
+					"protocol": "https",
+					"host": [
+						"83",
+						"250",
+						"202",
+						"129"
+					],
+					"path": [
+						"actions"
 					]
 				},
 				"description": "GET /homes"
