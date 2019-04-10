@@ -1,3 +1,5 @@
+**[Demonstrationsfilm](https://www.youtube.com/watch?v=t_opI8Ejhm8&feature=youtu.be)**
+
 **Vad min "web thing" gör?**
 
 Jag har valt att skapa en övervakningskamera som triggas av en infraröd rörelsedetektor. När ett varmt föremål/kropp passerar inom en halvcirkel med 5 meter radie aktiveras sensorn som skickar en signal från OUT pinnen till GPIO 4 på min Raspberry PIs moderkort. Min WoT node modul motion.js lyssnar på på denna input mha ['pi-pir-sensor'](https://www.npmjs.com/package/pi-pir-sensor) och surveillanceController.js lyssnar på rörelse-kanalen från motion.js. Därefter använder kontrollern camera.js som implementerar ['pi-camera-connect'](https://www.npmjs.com/package/pi-camera-connect) och tar en stillbild som sparas till disk, uppdaterar properties i APIet och skickar ut bilden i BASE64 kodning till registrerade websocket-webbklienter.
@@ -13,8 +15,7 @@ Hårdvara:
 * [Låda](https://www.raspberrypi.org/products/raspberry-pi-a-case/)
 
 
-
-[<img src="https://projects-static.raspberrypi.org/projects/physical-computing/59b9cbb555c53a50d510aa15b06e5d017f950b59/en/images/pir_wiring.png">](https://projects-static.raspberrypi.org/projects/physical-computing/59b9cbb555c53a50d510aa15b06e5d017f950b59/en/images/pir_wiring.png)
+[<img src="https://i.imgur.com/0yJsb82.png">](https://i.imgur.com/0yJsb82.png) 
 
 **Hur applikationen/tjänsten fungerar - Vi vill kunna ha en adress att besöka, inte installera applikationen lokalt**
 
